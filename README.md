@@ -1,2 +1,2 @@
 # Keras-Handwriting-Recognittion
-Rutgers capstone
+Rutgers capstone design
