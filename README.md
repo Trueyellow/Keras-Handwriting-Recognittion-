@@ -1,1 +1,2 @@
-# Keras-Handwriting-Recognittion-
+# Keras-Handwriting-Recognittion
+Rutgers capstone
