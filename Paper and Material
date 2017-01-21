@@ -1,3 +1,4 @@
-http://machinelearningmastery.com/tutorial-first-neural-network-python-keras/
-http://stackoverflow.com/questions/23506105/extracting-text-opencv/23565051#23565051
-https://www.nist.gov/srd/nist-special-database-19
+http://machinelearningmastery.com/tutorial-first-neural-network-python-keras/  Mnist tutorial
+http://stackoverflow.com/questions/23506105/extracting-text-opencv/23565051#23565051     Text detection
+https://www.nist.gov/srd/nist-special-database-19   Nist-19 image-data
+https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html  How to build our data
