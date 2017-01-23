@@ -32,9 +32,6 @@ validation_generator = test_datagen.flow_from_directory(
         target_size=(28, 28),
         batch_size=batch_size)
 
-print(train_generator,"tr")
-print(validation_generator,"te")
-
 # input image dimensions
 img_rows, img_cols = 28, 28
 # number of convolutional filters to use
@@ -45,11 +42,6 @@ pool_size = (2, 2)
 kernel_size = (3, 3)
 input_shape = (img_rows, img_cols, 3)
 
-Train = np_utils.to_categorical(train_generator, nb_classes)
-Test = np_utils.to_categorical(validation_generator, nb_classes)
-
-print(Train,"tr")
-print(Test,"te")
 """
 train_generator = train_generator.reshape(train_generator.shape[0], img_rows, img_cols, 1)
 validation_generator = validation_generator.reshape(validation_generator.shape[0], img_rows, img_cols, 1)
@@ -88,8 +80,8 @@ model.compile(loss='categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
 
-model.fit(Train, Test, batch_size=batch_size, nb_epoch=nb_epoch,
-          verbose=1, validation_data=validation_generator)
+model.fit_generator(train_generator, samples_per_epoch=557455 ,nb_epoch=nb_epoch,
+          verbose=1, validation_data=validation_generator,nb_val_samples=174415)
 
 model.save_weights('first_tryBatchsize64.h5')
 
