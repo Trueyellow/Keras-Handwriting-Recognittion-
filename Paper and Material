@@ -4,3 +4,4 @@ https://www.nist.gov/srd/nist-special-database-19   Nist-19 image-data
 https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html  How to build our data
 http://machinelearningmastery.com/save-load-keras-deep-learning-models/  How to load the h.5 weight file
 http://machinelearningmastery.com/time-series-prediction-lstm-recurrent-neural-networks-python-keras/
+http://stackoverflow.com/questions/36209310/how-to-detect-lines-accurately-using-houghlines-transform-in-opencv-python
