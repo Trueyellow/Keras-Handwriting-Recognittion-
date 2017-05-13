@@ -1,13 +1,21 @@
+"""
+Rutgers capstone--Team 37
+AlexNet.py
+We try to apply AlexNet to our character level train data. Input data is preprocessed data by resizing to 128*128 pixels
+Although this is a shallow network with only five convolution layers , bu
+"""
+
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
 from keras import optimizers,callbacks
+import pandas as pd
 
 np.random.seed(1337)  # for reproducibility
 batch_size = 96
-nb_classes = 62
+nb_classes = 63
 nb_epoch = 100
 
 TrainDataName =['Traindata1.npy','Traindata2.npy','Traindata3.npy','Traindata4.npy','Traindata5.npy','Traindata6.npy',
@@ -26,7 +34,7 @@ TestLabelName=['Testlabel1.npy','Testlabel2.npy','Testlabel3.npy',
                'Testlabel4.npy','Testlabel5.npy','Testlabel6.npy','Testlabel7.npy']
 
 # input image dimensions
-img_rows, img_cols = 128,128
+img_rows, img_cols = 128, 128
 # number of convolutional filters to use
 nb_filters1 = 48
 nb_filters2 = 128
@@ -47,14 +55,6 @@ kernel_size5 = (3, 3)
 #Test_Label = np_utils.to_categorical(Test_Label , nb_classes)
 
 input_shape = (img_rows, img_cols,1)
-
-"""
-Train_Data= Train_Data.astype('float32')
-Test_Data = Test_Data.astype('float32')
-
-Train_Data /= 255
-Test_Data /= 255
-"""
 
 # convert class vectors to binary class matrices
 
@@ -96,7 +96,7 @@ model.add(Dropout(0.5))
 model.add(Dense(nb_classes))
 model.add(Activation('softmax'))
 
-model.load_weights('95.h5')
+# model.load_weights('95.h5')
 
 call=callbacks.EarlyStopping(monitor='loss',min_delta=0.001, patience=2, verbose=1, mode='auto')
 
@@ -105,10 +105,19 @@ optimizer=optimizers.Adam(lr=0.00003, beta_1=0.9, beta_2=0.999, epsilon=1e-08, d
 model.compile(loss='categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
-num=0
+
+
+# Test_Data = np.load('Testdata1.npy')
+# Test_Label = np.load('Testlabel1.npy')
+# Test_Data = Test_Data.reshape(Test_Data.shape[0], img_rows, img_cols, 1)
+# Test_hat = model.predict_classes(Test_Data)
+# Test_Label2 = Test_Label.ravel()
+# Confision = pd.crosstab(Test_hat, Test_Label2)
+# Confision.to_csv('example.csv')
+
+num = 0
 
 for epoch in range(30):
-
     for trainname in TrainDataName:
         num += 1
         Train_Data=np.load(trainname)
@@ -124,11 +133,11 @@ for epoch in range(30):
     print('Weight Saved')
 
     for testname in TestDataName:
-        Test_Data=np.load(testname)
-        Testlabel=TestLabelName[TestDataName.index(testname)]
-        Test_Label=np.load(Testlabel)
+        Test_Data = np.load(testname)
+        Testlabel = TestLabelName[TestDataName.index(testname)]
+        Test_Label = np.load(Testlabel)
         Test_Data = Test_Data.reshape(Test_Data.shape[0], img_rows, img_cols, 1)
         Test_Label = np_utils.to_categorical(Test_Label, nb_classes)
         score = model.evaluate(Test_Data, Test_Label, batch_size=batch_size,verbose=0)
-        print(score[1])
+
     print('Epoch ',epoch)
