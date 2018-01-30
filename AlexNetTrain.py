@@ -5,7 +5,7 @@ from keras.layers import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
 from keras import optimizers,callbacks
 
-np.random.seed(1337)  # for reproducibility
+
 batch_size = 96
 nb_classes = 62
 nb_epoch = 100
@@ -14,6 +14,7 @@ TrainDataName =['Traindata1.npy','Traindata2.npy','Traindata3.npy','Traindata4.n
         'Traindata7.npy','Traindata8.npy','Traindata9.npy','Traindata10.npy','Traindata11.npy','Traindata12.npy',
         'Traindata13.npy','Traindata14.npy','Traindata15.npy','Traindata16.npy','Traindata17.npy','Traindata18.npy',
         'Traindata19.npy','Traindata20.npy','Traindata21.npy','Traindata22.npy','Traindata23.npy']
+
 TrainLabelName=['Trainlabel1.npy','Trainlabel2.npy','Trainlabel3.npy','Trainlabel4.npy','Trainlabel5.npy','Trainlabel6.npy',
         'Trainlabel7.npy','Trainlabel8.npy','Trainlabel9.npy','Trainlabel10.npy', 'Trainlabel11.npy','Trainlabel12.npy',
         'Trainlabel13.npy','Trainlabel14.npy','Trainlabel15.npy','Trainlabel16.npy', 'Trainlabel17.npy','Trainlabel18.npy',
@@ -43,18 +44,7 @@ kernel_size4 = (3, 3)
 kernel_size5 = (3, 3)
 
 
-#Test_Data = Test_Data.reshape(Test_Data.shape[0], img_rows, img_cols, 1)
-#Test_Label = np_utils.to_categorical(Test_Label , nb_classes)
-
 input_shape = (img_rows, img_cols,1)
-
-"""
-Train_Data= Train_Data.astype('float32')
-Test_Data = Test_Data.astype('float32')
-
-Train_Data /= 255
-Test_Data /= 255
-"""
 
 # convert class vectors to binary class matrices
 
@@ -105,19 +95,19 @@ optimizer=optimizers.Adam(lr=0.00003, beta_1=0.9, beta_2=0.999, epsilon=1e-08, d
 model.compile(loss='categorical_crossentropy',
               optimizer=optimizer,
               metrics=['accuracy'])
-num=0
+num = 0
 
 for epoch in range(30):
 
     for trainname in TrainDataName:
         num += 1
-        Train_Data=np.load(trainname)
-        trainlabel=TrainLabelName[TrainDataName.index(trainname)]
+        Train_Data = np.load(trainname)
+        trainlabel = TrainLabelName[TrainDataName.index(trainname)]
         Train_Label=np.load(trainlabel)
         Train_Data = Train_Data.reshape(Train_Data.shape[0], img_rows, img_cols, 1)
         Train_Label = np_utils.to_categorical(Train_Label, nb_classes)
         model.fit(Train_Data, Train_Label, batch_size=batch_size, nb_epoch=1,
-            verbose=2,callbacks=[call])
+            verbose=2, callbacks=[call])
         print(trainname, "The name of the file")
 
     model.save_weights('Fit.h5')
